@@ -22,6 +22,9 @@
     --focus-ring: rgba(37, 99, 235, 0.2);
     --welcome-bg: #1e3a5f;
     --welcome-border: #2563eb;
+    --accent-color: #60a5fa;
+    --accent-hover: #3b82f6;
+    --link-bg-hover: rgba(96, 165, 250, 0.1);
 }
 
 /* Base Styles */
@@ -245,6 +248,44 @@ header h1 {
     color: var(--text-secondary);
 }
 
+.source-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-color);
+    transition: all 0.3s ease;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 500;
+}
+
+.source-link:hover {
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
+    background-color: var(--link-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);
+}
+
+.source-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+/* Add external link icon */
+.source-link::after {
+    content: '↗';
+    font-size: 0.75em;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.source-link:hover::after {
+    opacity: 1;
+}
+
 /* Markdown formatting styles */
 .message-content h1,
 .message-content h2,
@@ -324,6 +365,47 @@ header h1 {
     border: none;
     border-top: 1px solid var(--border-color);
     margin: 1rem 0;
+}
+
+/* General link styling for message content */
+.message-content a:not(.source-link) {
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-color);
+    transition: all 0.3s ease;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.message-content a:not(.source-link):hover {
+    color: var(--accent-hover);
+    border-bottom-color: var(--accent-hover);
+    background-color: var(--link-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.2);
+}
+
+.message-content a:not(.source-link):focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+/* Add external link icon for external links */
+.message-content a[href^="http"]:not(.source-link)::after,
+.message-content a[href^="https"]:not(.source-link)::after {
+    content: '↗';
+    font-size: 0.75em;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.message-content a[href^="http"]:not(.source-link):hover::after,
+.message-content a[href^="https"]:not(.source-link):hover::after {
+    opacity: 1;
 }
 
 /* Chat Input Container */
@@ -443,6 +525,32 @@ header h1 {
     border-radius: 8px;
     border: 1px solid rgba(34, 197, 94, 0.2);
     margin: 0.5rem 0;
+}
+
+/* New Chat Button */
+.new-chat-button {
+    width: 100%;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border: none;
+    background: none;
+    outline: none;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.new-chat-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.new-chat-button:hover {
+    color: var(--primary-color);
 }
 
 /* Sidebar Headers */

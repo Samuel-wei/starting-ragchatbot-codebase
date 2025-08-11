@@ -4,7 +4,7 @@ from document_processor import DocumentProcessor
 from vector_store import VectorStore
 from ai_generator import AIGenerator
 from session_manager import SessionManager
-from search_tools import ToolManager, CourseSearchTool
+from search_tools import ToolManager, CourseSearchTool, CourseOutlineTool
 from models import Course, Lesson, CourseChunk
 
 class RAGSystem:
@@ -22,7 +22,9 @@ class RAGSystem:
         # Initialize search tools
         self.tool_manager = ToolManager()
         self.search_tool = CourseSearchTool(self.vector_store)
+        self.outline_tool = CourseOutlineTool(self.vector_store)
         self.tool_manager.register_tool(self.search_tool)
+        self.tool_manager.register_tool(self.outline_tool)
     
     def add_course_document(self, file_path: str) -> Tuple[Course, int]:
         """
@@ -127,7 +129,19 @@ class RAGSystem:
         )
         
         # Get sources from the search tool
-        sources = self.tool_manager.get_last_sources()
+        raw_sources = self.tool_manager.get_last_sources()
+        
+        # Convert sources to strings if they are dictionaries
+        sources = []
+        for source in raw_sources:
+            if isinstance(source, dict):
+                # Convert dict to string format
+                if 'display' in source:
+                    sources.append(source['display'])
+                else:
+                    sources.append(str(source))
+            else:
+                sources.append(str(source))
 
         # Reset sources after retrieving them
         self.tool_manager.reset_sources()
